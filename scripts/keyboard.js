@@ -69,6 +69,18 @@ Keyboard.prototype.add = function(row,top,bottom,mod){
     case '/':
       charCode = 191;
       break;
+    case 'left':
+      charCode = 37;
+      break;
+    case 'up':
+      charCode = 38;
+      break;
+    case 'down':
+      charCode = 40;
+      break;
+    case 'right':
+      charCode = 39;
+      break;
     case '1':
     case '2':
     case '3':
@@ -80,6 +92,9 @@ Keyboard.prototype.add = function(row,top,bottom,mod){
     case '9':
     case '0':
       charCode = bottom.charCodeAt(0);
+      break;
+    case '&nbsp;':
+      charCode = -1;
       break;
     default:
       charCode = top.charCodeAt(0);
@@ -146,13 +161,17 @@ keyboard.add(3,'>','.')
 keyboard.add(3,'?','/')
 keyboard.add(3,'&nbsp;','shift','shift')
 
-keyboard.add(4,'&nbsp;','&nbsp;')
-keyboard.add(4,'&nbsp;','ctrl')
-keyboard.add(4,'&nbsp;','alt')
-keyboard.add(4,'&nbsp;','cmd')
-keyboard.add(4,'&nbsp;','space','space')
-keyboard.add(4,'&nbsp;','cmd')
-keyboard.add(4,'&nbsp;','alt')
+keyboard.add(4,'&nbsp;','&nbsp;');
+keyboard.add(4,'&nbsp;','ctrl');
+keyboard.add(4,'&nbsp;','alt');
+keyboard.add(4,'&nbsp;','cmd');
+keyboard.add(4,'&nbsp;','space','space');
+keyboard.add(4,'&nbsp;','cmd');
+keyboard.add(4,'&nbsp;','alt');
+keyboard.add(4,'&nbsp;','left');
+keyboard.add(4,'&nbsp;','up');
+keyboard.add(4,'&nbsp;','down');
+keyboard.add(4,'&nbsp;','right');
 
 var html = Mustache.render( $("#rowTemplate").html(), keyboard);
 $("#keyboard").append(html);
@@ -200,6 +219,8 @@ function outputJs(e){
   js.push("  }");
   js.push("}");
 
+  js.push("window.onkeydown = handleKeyDown;");
+
   model.output = js.join("<br/>").replace(/\s/g,'&nbsp;');
   model.keys   = getKeysFromCharCodes(e);
 
@@ -219,7 +240,21 @@ function getKeysFromCharCodes(e){
     output += "Shift + ";
   }
 
-  output += String.fromCharCode(e.keyCode);
+  if(e.keyCode == 37){
+    output+= "Left";
+  }
+  else if(e.keyCode == 38){
+    output+= "Up";
+  }
+  else if(e.keyCode == 39){
+    output+= "Right";
+  }
+  else if(e.keyCode == 40){
+    output+= "Down";
+  }
+  else{
+    output += String.fromCharCode(e.keyCode);
+  }
 
   return output;
 }
