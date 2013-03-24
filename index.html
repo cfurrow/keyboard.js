@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <title>Keyboard.js</title>
+  <style type="text/css" media="all">
+    body{
+      font-family:Helvetica Neue, Helvetica, Arial, sans-serif;
+      color:#333;
+    }
+    .container
+    {
+      width:90%;
+      margin: 0 auto;
+    } 
+    .row{
+      display:block;
+    }
+    .key{
+      width:35px;
+      height:35px;
+      display:inline-block;
+      border: 1px solid #333;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+    }
+    .key .top, .key .bottom
+    {
+      display:block;
+      width:100%;
+      text-align:center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Keyboard.js</h1>
+    </header>
+    <section id="keyboard">
+    </section>
+  </div> 
+
+  <script type="text/html" id="rowTemplate">
+    {{#rows}}
+    <div class='row'>
+      {{#keys}}
+        <span class='key {{modifier}}'>
+          <span class='top'>{{top}}</span>
+          <span class='bottom'>{{bottom}}</span>
+        </span>
+      {{/keys}}
+    </div>
+    {{/rows}}
+  </script>
+  <script type="text/javascript" charset="utf-8" src="scripts/jquery.min.js"> </script>
+  <script type="text/javascript" charset="utf-8" src="scripts/mustache.js"> </script>
+  <script type="text/javascript" charset="utf-8">
+    var keyboard = { rows:[] };
+    keyboard.rows.push( {keys:[{top:'~',bottom:'`'},{top:'!',bottom:'1'}]} );
+
+    var html = Mustache.render( $("#rowTemplate").html(), keyboard);
+    $("#keyboard").append(html);
+    
+  </script>
+</body>
+</html>
