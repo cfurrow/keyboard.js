@@ -1,0 +1,50 @@
+body{
+  font-family:Helvetica Neue, Helvetica, Arial, sans-serif;
+  color:#333;
+}
+.container
+{
+  width:90%;
+  margin: 0 auto;
+} 
+.row{
+  display:block;
+  margin: 0 0 5px 0;
+}
+.key{
+  width:35px;
+  height:35px;
+  display:inline-block;
+  border: 1px solid #333;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+.key .top, .key .bottom
+{
+  display:block;
+  width:100%;
+  text-align:center;
+}
+.key.delete, .key.tab
+{
+  width:60px;
+}
+.key.capslock
+{
+  width:70px;
+}
+.key.enter
+{
+  width:68px;
+}
+.key.shift
+{
+  width:89px;
+}
+.key.space{
+  width:237px;
+}
+.key.pressed{
+  background-color:#ccc;
+}
