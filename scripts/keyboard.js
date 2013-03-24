@@ -180,8 +180,9 @@ function stopTimer(e){
 
 }
 function outputJs(e){
-  var js = [];
+  var js           = [];
   var conditionals = [];
+  var model        = {}
   js.push("function handleKeyDown(e){");
   conditionals.push("    if(e.keyCode == " + e.keyCode);
   if(e.shiftKey){
@@ -191,7 +192,7 @@ function outputJs(e){
     conditionals.push(" && e.ctrlKey == " +  e.ctrlKey); 
   }
   if(e.altKey){
-     js.push(" && e.altKey == " + e.altKey );
+     conditionals.push(" && e.altKey == " + e.altKey );
   }
   conditionals.push("){");
   js.push(conditionals.join(''));
@@ -199,12 +200,33 @@ function outputJs(e){
   js.push("  }");
   js.push("}");
 
-  var html = Mustache.render( $("#jsOutputTemplate").html(), {output:js.join("<br/>").replace(/\s/g,'&nbsp;')});
+  model.output = js.join("<br/>").replace(/\s/g,'&nbsp;');
+  model.keys   = getKeysFromCharCodes(e);
+
+  var html = Mustache.render( $("#jsOutputTemplate").html(), model);
   $("#output").prepend(html);
+}
+
+function getKeysFromCharCodes(e){
+  var output = "";
+  if(e.altKey){
+    output += "Alt + ";
+  }
+  if(e.ctrlKey){
+    output += "Ctrl + ";
+  }
+  if(e.shiftKey){
+    output += "Shift + ";
+  }
+
+  output += String.fromCharCode(e.keyCode);
+
+  return output;
 }
 
 window.onkeydown = function(e){
   startTimer(e);
+  console.log(e);
   _.each(keyboard.rows,function(row){
 
     var found = _.find(row.keys,function(key){
