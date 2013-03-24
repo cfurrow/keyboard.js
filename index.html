@@ -51,6 +51,9 @@
     .key.space{
       width:237px;
     }
+    .key.pressed{
+      background-color:#ccc;
+    }
   </style>
 </head>
 <body>
@@ -66,7 +69,7 @@
     {{#rows}}
     <div class='row'>
       {{#keys}}
-        <span class='key {{modifier}}'>
+        <span id="{{charCode}}" class='key {{modifier}}'>
           <span class='top'>{{{top}}}</span>
           <span class='bottom'>{{{bottom}}}</span>
         </span>
@@ -76,6 +79,7 @@
   </script>
   <script type="text/javascript" charset="utf-8" src="scripts/jquery.min.js"> </script>
   <script type="text/javascript" charset="utf-8" src="scripts/mustache.js"> </script>
+  <script type="text/javascript" charset="utf-8" src="scripts/underscore-min.js"> </script>
   <script type="text/javascript" charset="utf-8">
     var Keyboard = function(){
       this.rows = []; 
@@ -89,11 +93,35 @@
       key = {top:top,bottom:bottom,modifier:mod};
       switch(bottom){
         case 'delete':
+          charCode = 8;
+          break;
         case 'tab':
+          charCode = 9;
+          break;
         case 'enter':
+          charCode = 13;
+          break;
+        case 'shift':
+          charCode = 16;
+          break;
+        case '`':
+          charCode = 192;
+          break;
+        case '1':
+        case '2':
+        case '3':
+        case '4':
+        case '5':
+        case '6':
+        case '7':
+        case '8':
+        case '9':
+        case '0':
+          charCode = bottom.charCodeAt(0);
           break;
         default:
-          charCode = bottom.charCodeAt(0);
+          charCode = top.charCodeAt(0);
+          break;
       }
       key.charCode = charCode;
       this.rows[row].keys.push(key);
@@ -168,9 +196,29 @@
 
 
     window.onkeydown = function(e){
-      console.log(e.keyCode);
+      console.log(e);
+      _.each(keyboard.rows,function(row){
+
+        var found = _.find(row.keys,function(key){
+          return key.charCode == e.keyCode; 
+        });
+
+        if( typeof(found) !== "undefined"){
+          $("#"+found.charCode).addClass("pressed");
+        }
+      });
     };
-    
+
+    window.onkeyup = function(e){
+      _.each(keyboard.rows,function(row){
+        var found = _.find(row.keys,function(key){
+          return key.charCode == e.keyCode; 
+        });
+        if( typeof(found) !== "undefined"){
+          $("#"+found.charCode).removeClass("pressed");
+        }
+      });
+    }
   </script>
 </body>
 </html>
