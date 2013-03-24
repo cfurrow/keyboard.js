@@ -252,6 +252,21 @@ function getKeysFromCharCodes(e){
   else if(e.keyCode == 40){
     output+= "Down";
   }
+  else if(e.keyCode == 16){
+    output += "Shift";
+  }
+  else if(e.keyCode == 18){
+    output += "Alt";
+  }
+  else if(e.keyCode == 17){
+    output += "Ctrl";
+  }
+  else if(e.keyCode == 20){
+    output += "Caps Lock";
+  }
+  else if(e.keyCode == 91 || e.keyCode == 93){
+    output += "Command / Windows";
+  }
   else{
     output += String.fromCharCode(e.keyCode);
   }
