@@ -157,8 +157,54 @@ keyboard.add(4,'&nbsp;','alt')
 var html = Mustache.render( $("#rowTemplate").html(), keyboard);
 $("#keyboard").append(html);
 
+var startTimes = []; 
+var endTimes   = [];
+
+function startTimer(e){
+  if(typeof(startTimes[e.keyCode]) == "undefined" || startTimes[e.keyCode] === null){
+    startTimes[e.keyCode] = new Date();
+  }
+}
+function stopTimer(e){
+  var timeElapsedMs   = 0;
+  endTimes[e.keyCode] = new Date();
+
+  timeElapsedMs = endTimes[e.keyCode] - startTimes[e.keyCode];
+
+
+  if(timeElapsedMs > 1000){
+    outputJs(e);
+  }
+  startTimes[e.keyCode] = null;
+  endTimes[e.keyCode]   = null;
+
+}
+function outputJs(e){
+  var js = [];
+  var conditionals = [];
+  js.push("function handleKeyDown(e){");
+  conditionals.push("    if(e.keyCode == " + e.keyCode);
+  if(e.shiftKey){
+    conditionals.push(" && e.shiftKey == " + e.shiftKey);
+  }
+  if(e.ctrlKey){
+    conditionals.push(" && e.ctrlKey == " +  e.ctrlKey); 
+  }
+  if(e.altKey){
+     js.push(" && e.altKey == " + e.altKey );
+  }
+  conditionals.push("){");
+  js.push(conditionals.join(''));
+  js.push("    //do something");
+  js.push("  }");
+  js.push("}");
+
+  var html = Mustache.render( $("#jsOutputTemplate").html(), {output:js.join("<br/>").replace(/\s/g,'&nbsp;')});
+  $("#output").prepend(html);
+}
 
 window.onkeydown = function(e){
+  startTimer(e);
   _.each(keyboard.rows,function(row){
 
     var found = _.find(row.keys,function(key){
@@ -174,6 +220,7 @@ window.onkeydown = function(e){
 };
 
 window.onkeyup = function(e){
+  stopTimer(e);
   _.each(keyboard.rows,function(row){
     var found = _.find(row.keys,function(key){
       return key.charCode == e.keyCode; 

@@ -12,6 +12,8 @@
     </header>
     <section id="keyboard">
     </section>
+    <section id="output">
+    </section>
   </div> 
 
   <script type="text/html" id="rowTemplate">
@@ -25,6 +27,12 @@
       {{/keys}}
     </div>
     {{/rows}}
+  </script>
+
+  <script type="text/html" id="jsOutputTemplate">
+    <div class='js'>
+      {{{output}}}
+    </div>
   </script>
   <script type="text/javascript" charset="utf-8" src="scripts/jquery.min.js"> </script>
   <script type="text/javascript" charset="utf-8" src="scripts/mustache.js"> </script>

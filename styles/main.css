@@ -4,7 +4,7 @@ body{
 }
 .container
 {
-  width:90%;
+  width:960px;
   margin: 0 auto;
 } 
 .row{
@@ -12,7 +12,7 @@ body{
   margin: 0 0 5px 0;
 }
 .key{
-  width:35px;
+  width:60px;
   height:35px;
   display:inline-block;
   border: 1px solid #333;
@@ -28,23 +28,33 @@ body{
 }
 .key.delete, .key.tab
 {
-  width:60px;
+  width:80px;
 }
 .key.capslock
 {
-  width:70px;
+  width:100px;
 }
 .key.enter
 {
-  width:68px;
+  width:106px;
 }
 .key.shift
 {
-  width:89px;
+  width: 136px;
 }
 .key.space{
-  width:237px;
+  width:378px;
 }
 .key.pressed{
   background-color:#ccc;
+}
+
+.js
+{
+  border: 1px solid #ccc;
+  padding:10px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  margin:10px 0 10px 0;
 }
