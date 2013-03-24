@@ -131,6 +131,27 @@
         case '=':
           charCode = 187;
           break;
+        case '[':
+          charCode = 219;
+          break;
+        case ']':
+          charCode = 221;
+          break;
+        case '\\':
+          charCode = 220;
+          break;
+        case 'caps lock':
+          charCode = 20;
+          break;
+        case ',':
+          charCode = 188;
+          break;
+        case '.':
+          charCode = 190;
+          break;
+        case '/':
+          charCode = 191;
+          break;
         case '1':
         case '2':
         case '3':
@@ -231,6 +252,8 @@
           $("#"+found.charCode).addClass("pressed");
         }
       });
+
+      return false;
     };
 
     window.onkeyup = function(e){
@@ -242,6 +265,8 @@
           $("#"+found.charCode).removeClass("pressed");
         }
       });
+
+      return false;
     }
   </script>
 </body>
